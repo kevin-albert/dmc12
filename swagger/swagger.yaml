@@ -1,0 +1,190 @@
+swagger: "2.0"
+info:
+  description: "Graphs and things"
+  version: "0.0.1"
+  title: "DAG"
+host: "localhost:3000"
+basePath: "/"
+tags:
+- name: "node"
+  description: "Manage vertices"
+- name: "edge"
+  description: "Manage edges"
+schemes:
+- "http"
+paths:
+  /node/{id}:
+    get: 
+      tags:
+      - "node"
+      summary: "Get a node"
+      description: ""
+      operationId: "getNode"
+      consumes: 
+        - "application/json"
+      produces: 
+        - "application/json"
+      parameters: 
+        - name: "key"
+          in: "path"
+          type: "string"
+          description: "node id"
+          required: true
+        - name: "at"
+          in: "query"
+          type: "number"
+          description: "timestamp"
+          required: false
+      responses:
+        200:
+          description: "OK"
+          schema:
+            $ref: "#definitions/Node"
+        404:
+          description: "Not found"
+    put:
+      tags:
+      - "node"
+      summary: "Create a node"
+      description: ""
+      operationId: "createNode"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "path"
+        name: "id"
+        type: "string"
+        description: "node id"
+        required: true
+      - in: "body"
+        name: "data"
+        description: "Metadata stored with this node"
+        required: true
+        schema:
+          $ref: "#/definitions/ObjectData"
+      responses:
+        201:
+          description: "Created"
+        400:
+          description: "Invalid request"
+    delete:
+      tags:
+      - "node"
+      summary: "Delete a node"
+      description: ""
+      operationId: "deleteNode"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "path"
+        name: "id"
+        type: "string"
+        description: "node id"
+        required: true
+      responses:
+        204:
+          description: "OK"
+  /edge/{from}/{to}:
+    get:
+      tags:
+        - "edge"
+      summary: "Get an edge"
+      description: ""
+      operationId: "getEdge"
+      consumes: 
+        - "application/json"
+      produces: 
+        - "application/json"
+      parameters: 
+        - name: "from"
+          in: "path"
+          type: "string"
+          required: true
+        - name: "to"
+          in: "path"
+          type: "string"
+          required: true
+        - name: "at"
+          in: "query"
+          type: "number"
+          description: "timestamp"
+          required: false
+      responses:
+        200:
+          description: "OK"
+          schema:
+            $ref: "#/definitions/Edge"
+        404:
+          description: "Not found"
+    put:
+      tags:
+        - "edge"
+      summary: "Create an edge"
+      description: ""
+      operationId: "createEdge"
+      consumes: 
+        - "application/json"
+      produces: 
+        - "application/json"
+      parameters: 
+        - name: "from"
+          in: "path"
+          type: "string"
+          required: true
+        - name: "to"
+          in: "path"
+          type: "string"
+          required: true
+        - name: "data"
+          in: "body"
+          required: true
+          schema:
+            $ref: "#/definitions/ObjectData"
+      responses:
+        201:
+          description: "Created"
+          schema:
+            $ref: "#/definitions/Edge"
+    delete:
+      tags:
+        - "edge"
+      summary: "Remove an edge"
+      description: ""
+      operationId: "deleteEdge"
+      consumes: 
+        - "application/json"
+      produces: 
+        - "application/json"
+      parameters: 
+        - name: "from"
+          in: "path"
+          type: "string"
+          required: true
+        - name: "to"
+          in: "path"
+          type: "string"
+          required: true
+      responses:
+        204:
+          description: "OK"
+definitions:
+  ObjectData:
+    type: "object"
+  Node:
+    type: "object"
+    properties:
+      id:
+        type: "string"
+      data: 
+        type: "object"
+  Edge:
+    type: "object"
+    properties:
+      from:
+        type: "string"
+      to:
+        type: "string"
