@@ -30,7 +30,7 @@ paths:
           type: "string"
           description: "node id"
           required: true
-        - name: "at"
+        - name: "t"
           in: "query"
           type: "number"
           description: "timestamp"
@@ -108,7 +108,7 @@ paths:
           in: "path"
           type: "string"
           required: true
-        - name: "at"
+        - name: "t"
           in: "query"
           type: "number"
           description: "timestamp"

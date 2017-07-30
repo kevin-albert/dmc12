@@ -13,15 +13,13 @@ DMC12.prototype.getNode = function(key, when) {
         if (!when) when = Date.now();
         let history = this.nodes[key];
         if (history) {
-            let node = history.get(when);
-            if (node) {
+            let record = history.get(when);
+            if (record.state) {
                 subscriber.next({
                     key: key,
-                    href: `/node/${key}?t=${when}`,
-                    data: node
+                    data: record.state
                 });
             }
-            subscriber.next(history.get(when));
         }
         subscriber.complete();
     });
@@ -59,7 +57,6 @@ DMC12.prototype.getEdge = function(from, to, when) {
                     let res = {
                         from: from,
                         to: to,
-                        href: `/edge/${from}/${to}?t=${when}`,
                         data: edge
                     }
                 }
