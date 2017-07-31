@@ -12,6 +12,7 @@
 #include <iostream>
 #include <memory>
 #include <utility>
+#include <thread>
 #include "asio/streambuf.hpp"
 #include "asio/ts/buffer.hpp"
 #include "asio/ts/internet.hpp"
@@ -23,6 +24,7 @@ public:
   session(tcp::socket socket): socket(std::move(socket)) {}
 
   void start() {
+    std::cout << "thread " << std::this_thread::get_id() << " start()\n";
     do_read();
   }
 
@@ -31,25 +33,25 @@ private:
     auto self(shared_from_this());
     asio::async_read_until(socket, data, "\r\n",
         [this, self](std::error_code ec, std::size_t length) {
+          std::cout << "thread " << std::this_thread::get_id() << " read\n";
           if (ec) {
-            std::cerr << "error reading from socket - ";
-                      // << ec.category() << ": " << ec.message();
+            std::cerr << "error reading from socket - " << ec.message() << "\n";
             socket.close();
           }
           else {
-            respond(length);
+            data.consume(length);
+            respond();
           }
         });
   }
 
-  void respond(std::size_t length) {
+  void respond() {
     auto self(shared_from_this());
     asio::async_write(socket, asio::buffer("Hello\r\n", 7),
         [this, self](std::error_code ec, std::size_t /*length*/) {
-          // if (!ec) {
-          //   do_read();
-          // }
-          socket.close();
+          if (!ec) {
+            do_read();
+          }
         });
   }
 
@@ -90,7 +92,12 @@ int main(int argc, char* argv[]) {
 
     asio::io_context io_context;
     server s(io_context, std::atoi(argv[1]));
-    io_context.run();
+    std::vector<std::thread> threads;
+    for (int i = 0; i < 4; ++i) {
+      threads.push_back(std::thread([&io_context]() { io_context.run(); }));
+    }
+    for (auto &t: threads)
+      t.join();
   }
   catch (std::exception& e) {
     std::cerr << "Exception: " << e.what() << "\n";
