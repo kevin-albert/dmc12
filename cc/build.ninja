@@ -1,0 +1,12 @@
+cflags = -Wall -std=c++11
+includes = -Ilib
+
+rule cc
+  command = g++ $cflags $includes -c $in -o $out
+
+rule ld
+  command = g++ $in -o $out
+
+build out/tcp.o: cc src/tcp.cpp
+build tcp: ld out/tcp.o
+default tcp

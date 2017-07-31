@@ -1,0 +1,5 @@
+# ninja log v5
+0	2001	0	out/tcp.o	cf073ec41e43f16c
+2001	2048	0	tcp	3d733029c01c6cb5
+1	854	0	out/tcp.o	cf073ec41e43f16c
+854	902	0	tcp	3d733029c01c6cb5
