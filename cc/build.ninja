@@ -1,4 +1,5 @@
 cflags = -Wall -std=c++11
+ldflags =
 includes = -Ilib
 
 rule cc
@@ -8,8 +9,15 @@ rule cc
 rule ld
   command = g++ $in -o $out
 
+# for compling w/ flex: cflags = -I/usr/local/opt/flex/include
+# for linking w/ flex: ldflags = -L/usr/local/opt/flex/lib
+# for linking w/ bison: ldflags = -L/usr/local/opt/bison/lib
+
 rule runtests
   command = $in
+
+build out/lexer.cpp: 
+  cflags =  -Wall -std=c++11
 
 build out/dmc12.o: cc src/dmc12.cpp
 build out/tcp_server.o: cc src/tcp_server.cpp
