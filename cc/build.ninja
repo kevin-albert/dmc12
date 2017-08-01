@@ -14,11 +14,11 @@ rule runtests
 build out/dmc12.o: cc src/dmc12.cpp
 build out/tcp_server.o: cc src/tcp_server.cpp
 build out/main.o: cc src/main.cpp
-build main: ld out/main.o out/tcp_server.o out/dmc12.o
+build dmc12: ld out/main.o out/tcp_server.o out/dmc12.o
 
 build test/main.o: cc test/main.cpp
 build test/run_tests: ld test/main.o 
 build test: phony _test
 build _test: runtests test/run_tests
 
-default main
+default dmc12

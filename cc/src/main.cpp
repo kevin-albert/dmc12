@@ -22,6 +22,8 @@ int main(int argc, char **argv) {
     for (int i = 0; i < 4; ++i) {
       threads.push_back(std::thread([&io_context]() { io_context.run(); }));
     }
+
+    std::cout << "TCP server listening on port " << port << "\n";
     for (auto &t: threads)
       t.join();
   }

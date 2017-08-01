@@ -1,18 +1,19 @@
 #ifndef DMC12_H
 #define DMC12_H 
 
+#include <ostream>
 #include <string>
 #include <functional>
-
-#include "asio/streambuf.hpp"
+#include "command.hpp"
 
 namespace dmc12 {
+
+using callback = std::function<void()>;
 
 class engine {
 public:
     engine();
-    void get_node(const std::string &key, asio::streambuf &out, std::function<void()> cb);
-    void put_node(const std::string &key, const std::string &data, std::function<void(void)> cb);
+    void run_command(const command &cmd, std::ostream &out, callback cb);
 };
 
 }

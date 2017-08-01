@@ -4,3 +4,4 @@ out
 *.o
 *.o.d
 tests/run_tests
+dmc12

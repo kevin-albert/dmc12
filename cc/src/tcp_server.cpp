@@ -29,11 +29,11 @@ public:
 
   void start() {
     std::cout << "thread " << std::this_thread::get_id() << " start()\n";
-    do_read();
+    read_loop();
   }
 
 private:
-  void do_read() {
+  void read_loop() {
     auto self(shared_from_this());
     asio::async_read_until(socket, input, "\r\n",
         [this, self](std::error_code ec, std::size_t length) {
@@ -43,16 +43,17 @@ private:
             socket.close();
           }
           else {
-            std::istream is(&input);            
+            std::istream is(&input); 
+            std::ostream os(&output);
 
-            if (verb == "get") {
-              std::cout << "GET " << path << "\n";
-
-              engine.get_node(path, output, this::respond(); });
-            } 
-            else if (verb == "put") {
-              std::cout << "PUT " << path << data << "\n";
-              engine.put_node(path, data, [this]() { respond(); });
+            dmc12::command cmd(is);
+            if (cmd) {
+              engine.run_command(cmd, os, [this, self]() {
+                respond();
+              });
+            } else {
+              os << "error invalid command\r\n";
+              socket.close();
             }
           }
         });
@@ -62,9 +63,7 @@ private:
     auto self(shared_from_this());
     asio::async_write(socket, output,
         [this, self](std::error_code ec, std::size_t /*length*/) {
-          if (!ec) {
-            do_read();
-          }
+          if (!ec) { read_loop(); }
         });
   }
 

@@ -1,3 +1,4 @@
+#include <iostream>
 #include "dmc12.h"
 
 using namespace dmc12;
@@ -6,10 +7,11 @@ engine::engine() {
 
 }
 
-void engine::get_node(const std::string &key, std::function<void(const std::string&)> cb) {
-  cb("XXX");
-}
-
-void engine::put_node(const std::string &key, const std::string &data, std::function<void(void)> cb) {
-    cb();
+void engine::run_command(const command &cmd, std::ostream &out, callback cb) {
+  std::cout << "verb:   " << cmd.verb << "\n"
+            << "argv:   ";
+  for (auto arg: cmd.argv) std::cout << arg << " ";
+  std::cout << "\ndata:   " << cmd.data << "\n";
+  out << "Hello\r\n";
+  cb();
 }
