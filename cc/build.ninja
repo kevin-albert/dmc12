@@ -2,11 +2,23 @@ cflags = -Wall -std=c++11
 includes = -Ilib
 
 rule cc
-  command = g++ $cflags $includes -c $in -o $out
+  depfile = $out.d
+  command = g++ -MMD -MF $out.d $cflags $includes -c $in -o $out
 
 rule ld
   command = g++ $in -o $out
 
-build out/tcp.o: cc src/tcp.cpp
-build tcp: ld out/tcp.o
-default tcp
+rule runtests
+  command = $in
+
+build out/dmc12.o: cc src/dmc12.cpp
+build out/tcp_server.o: cc src/tcp_server.cpp
+build out/main.o: cc src/main.cpp
+build main: ld out/main.o out/tcp_server.o out/dmc12.o
+
+build test/main.o: cc test/main.cpp
+build test/run_tests: ld test/main.o 
+build test: phony _test
+build _test: runtests test/run_tests
+
+default main

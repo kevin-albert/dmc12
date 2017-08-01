@@ -1,2 +1,6 @@
 out
 .ninja_log
+.ninja_deps
+*.o
+*.o.d
+tests/run_tests
