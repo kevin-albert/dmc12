@@ -3,8 +3,8 @@
 #include <vector>
 #include "asio/io_context.hpp"
 
-#include "dmc12.h"
-#include "tcp_server.h"
+#include "dmc12.hpp"
+#include "tcp_server.hpp"
 
 
 int main(int argc, char **argv) {

@@ -1,5 +1,5 @@
 #include <iostream>
-#include "dmc12.h"
+#include "dmc12.hpp"
 
 using namespace dmc12;
 
