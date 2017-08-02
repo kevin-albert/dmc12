@@ -6,7 +6,7 @@
 #include "DMCQLBaseListener.h"
 
 namespace dmc12 {
-namespace dmcql {
+namespace ql {
 
 class BasicListener: public DMCQLBaseListener {
 public: 
@@ -35,6 +35,6 @@ int main(void) {
     std::string s = "V['foo']";
     std::stringstream ss(s);
 
-    dmc12::dmcql::parse(ss);
+    dmc12::ql::parse(ss);
     return 0;
 }

@@ -24,46 +24,46 @@ rule runtests
   command = $in
 
 build src/dmcql/DMCQL.tokens $
-      src/dmcql/DMCQLBaseListener.cpp $
-      src/dmcql/DMCQLBaseListener.h $
-      src/dmcql/DMCQLLexer.cpp $
-      src/dmcql/DMCQLLexer.h $
-      src/dmcql/DMCQLLexer.tokens $
-      src/dmcql/DMCQLListener.cpp $
-      src/dmcql/DMCQLListener.h $
-      src/dmcql/DMCQLParser.cpp $
-      src/dmcql/DMCQLParser.h $
-      : antlr src/dmcql/DMCQL.g4
+      src/ql/DMCQLBaseListener.cpp $
+      src/ql/DMCQLBaseListener.h $
+      src/ql/DMCQLLexer.cpp $
+      src/ql/DMCQLLexer.h $
+      src/ql/DMCQLLexer.tokens $
+      src/ql/DMCQLListener.cpp $
+      src/ql/DMCQLListener.h $
+      src/ql/DMCQLParser.cpp $
+      src/ql/DMCQLParser.h $
+      : antlr src/ql/DMCQL.g4
 
-build gen_parser: phony src/dmcql/DMCQL.tokens $
-      src/dmcql/DMCQLBaseListener.cpp $
-      src/dmcql/DMCQLBaseListener.h $
-      src/dmcql/DMCQLLexer.cpp $
-      src/dmcql/DMCQLLexer.h $
-      src/dmcql/DMCQLLexer.tokens $
-      src/dmcql/DMCQLListener.cpp $
-      src/dmcql/DMCQLListener.h $
-      src/dmcql/DMCQLParser.cpp $
-      src/dmcql/DMCQLParser.h
+build gen_parser: phony src/ql/DMCQL.tokens $
+      src/ql/DMCQLBaseListener.cpp $
+      src/ql/DMCQLBaseListener.h $
+      src/ql/DMCQLLexer.cpp $
+      src/ql/DMCQLLexer.h $
+      src/ql/DMCQLLexer.tokens $
+      src/ql/DMCQLListener.cpp $
+      src/ql/DMCQLListener.h $
+      src/ql/DMCQLParser.cpp $
+      src/ql/DMCQLParser.h
 
-build out/dmcql: mkdirp
-build out/dmcql/parser.o: cc src/dmcql/parser.cpp || out/dmcql gen_parser
+build out/ql: mkdirp
+build out/ql/parser.o: cc src/ql/parser.cpp || out/ql gen_parser
   cflags = $cflags -Iinclude/antlr4
-build out/dmcql/DMCQLBaseListener.o: cc src/dmcql/DMCQLBaseListener.cpp
+build out/ql/DMCQLBaseListener.o: cc src/ql/DMCQLBaseListener.cpp
   cflags = $cflags -Iinclude/antlr4
-build out/dmcql/DMCQLLexer.o: cc src/dmcql/DMCQLLexer.cpp
+build out/ql/DMCQLLexer.o: cc src/ql/DMCQLLexer.cpp
   cflags = $cflags -Iinclude/antlr4
-build out/dmcql/DMCQLListener.o: cc src/dmcql/DMCQLListener.cpp
+build out/ql/DMCQLListener.o: cc src/ql/DMCQLListener.cpp
   cflags = $cflags -Iinclude/antlr4
-build out/dmcql/DMCQLParser.o: cc src/dmcql/DMCQLParser.cpp
+build out/ql/DMCQLParser.o: cc src/ql/DMCQLParser.cpp
   cflags = $cflags -Iinclude/antlr4
 
 build parsertest: ld $
-  out/dmcql/parser.o $
-  out/dmcql/DMCQLBaseListener.o $
-  out/dmcql/DMCQLLexer.o $
-  out/dmcql/DMCQLListener.o $
-  out/dmcql/DMCQLParser.o
+  out/ql/parser.o $
+  out/ql/DMCQLBaseListener.o $
+  out/ql/DMCQLLexer.o $
+  out/ql/DMCQLListener.o $
+  out/ql/DMCQLParser.o
 
 build out/dmc12.o: cc src/dmc12.cpp
 build out/tcp_server.o: cc src/tcp_server.cpp

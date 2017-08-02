@@ -1,7 +1,7 @@
 #include <istream>
 
 namespace dmc12 {
-namespace dmcql {
+namespace ql {
 
 void parse(std::istream &input);
 
