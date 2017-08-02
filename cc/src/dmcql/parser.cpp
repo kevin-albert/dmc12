@@ -32,7 +32,7 @@ void parse(std::istream &input) {
 #include <sstream>
 
 int main(void) {
-    std::string s = "0";
+    std::string s = "V['foo']";
     std::stringstream ss(s);
 
     dmc12::dmcql::parse(ss);

@@ -5,3 +5,4 @@ out
 *.o.d
 tests/run_tests
 dmc12
+.antlr
