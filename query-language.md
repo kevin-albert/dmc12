@@ -35,11 +35,6 @@ This is an informal langauge specification comprised mostly of examples, for the
     ```
     node 'xxx' -> { (id='xxx', prop=value) }
     ```
-    Or even just
-    ```
-    xxx -> (id='xxx', prop=value)
-    ```
-
     Question: Is the following true:
 
     ```V[id='xxx'] === V['xxx']```
