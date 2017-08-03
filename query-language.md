@@ -19,6 +19,7 @@ This is an informal langauge specification comprised mostly of examples, for the
   * String - a character sequence. Can be sorted and compared for equality
   * Number - a Decimal number fitting into 64 bits
   * UUID/GUID - A 128 bit number used to uniquely identify a node.
+  * Date - A date implemented correctly.
 
 ## Examples Querying
 
